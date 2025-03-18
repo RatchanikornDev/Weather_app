@@ -2,4 +2,4 @@ Demo app
 
 https://weather-app-ecru-xi-39.vercel.app/
 
-![Weather app](weather_app.png)
+<img src="weather_app.png" width="300" alt="Weather App Screenshot">
