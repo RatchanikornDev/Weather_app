@@ -1,0 +1,706 @@
+:root {
+  /* ตัวแปรสีโทนสมัยใหม่ */
+  --bg-color-primary: #101418;    /* สีพื้นหลังหลัก */
+  --bg-color-secondary: #1a1f25;  /* สีพื้นหลังรอง */
+  --card-bg: #242a33;             /* สีพื้นหลังการ์ด */
+  --accent-color: #0ea5e9;        /* สีเน้น */
+  --accent-color-hover: #38bdf8;  /* สีเน้นเมื่อโฮเวอร์ */
+  --text-color-primary: #f3f4f6;  /* สีข้อความหลัก */
+  --text-color-secondary: #9ca3af; /* สีข้อความรอง */
+  --text-color-tertiary: #6b7280; /* สีข้อความระดับที่สาม */
+  
+  /* สีของระดับคุณภาพอากาศ - สีสดใส เข้าถึงได้ง่าย */
+  --aqi-1: #22c55e; /* ดี */
+  --aqi-2: #facc15; /* ปานกลาง */
+  --aqi-3: #fb923c; /* ไม่ดีสำหรับกลุ่มอ่อนไหว */
+  --aqi-4: #ef4444; /* ไม่ดี */
+  --aqi-5: #7e22ce; /* แย่มาก */
+  
+  /* ระยะห่าง */
+  --spacing-xs: 6px;  /* ระยะห่างเล็กมาก */
+  --spacing-sm: 12px; /* ระยะห่างเล็ก */
+  --spacing-md: 18px; /* ระยะห่างกลาง */
+  --spacing-lg: 24px; /* ระยะห่างใหญ่ */
+  --spacing-xl: 32px; /* ระยะห่างใหญ่มาก */
+  
+  /* รัศมีขอบ */
+  --border-radius-sm: 12px;    /* รัศมีขอบเล็ก */
+  --border-radius-md: 16px;    /* รัศมีขอบกลาง */
+  --border-radius-lg: 24px;    /* รัศมีขอบใหญ่ */
+  --border-radius-full: 9999px; /* รัศมีขอบวงกลม */
+
+  /* เงา */
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); /* เงาเล็ก */
+  --shadow-md: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);  /* เงากลาง */
+  --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05); /* เงาใหญ่ */
+  --shadow-inner: inset 0 2px 4px 0 rgba(0,0,0,0.06); /* เงาด้านใน */
+  
+  /* การเปลี่ยนแปลงแบบ Transition */
+  --transition-fast: 0.15s ease;   /* การเปลี่ยนแปลงเร็ว */
+  --transition-medium: 0.3s ease;  /* การเปลี่ยนแปลงปานกลาง */
+  --transition-slow: 0.5s ease;    /* การเปลี่ยนแปลงช้า */
+}
+
+/* การรีเซ็ตและสไตล์พื้นฐานแบบสมัยใหม่ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background-color: var(--bg-color-primary);
+  color: var(--text-color-primary);
+  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  padding: var(--spacing-md);
+  line-height: 1.5;
+  transition: background-color var(--transition-medium); /* เปลี่ยนสีพื้นหลังแบบมีเอฟเฟกต์ */
+}
+
+hr {
+  margin: var(--spacing-md) 0;
+  border: none;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--text-color-tertiary), transparent); /* เส้นคั่นแบบ gradient */
+  opacity: 0.2;
+}
+
+/* สไตล์ส่วนหัวแบบสมัยใหม่ */
+.header {
+  position: sticky; /* ติดอยู่ด้านบนเมื่อเลื่อนหน้า */
+  top: 0;
+  z-index: 100;
+  background-color: var(--bg-color-primary);
+  backdrop-filter: blur(8px); /* เบลอพื้นหลังเพื่อเอฟเฟกต์ใส */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+  padding: var(--spacing-md) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* เส้นขอบบางๆ ที่ด้านล่าง */
+}
+
+.header h2 {
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  font-size: 1.5rem;
+  background: linear-gradient(45deg, var(--accent-color), #60a5fa); /* ข้อความแบบไล่สี */
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.search-container {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex: 1;
+  max-width: 600px;
+  margin: 0 var(--spacing-lg);
+}
+
+#city_input {
+  background-color: var(--bg-color-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 16px;
+  font-size: 1rem;
+  border-radius: var(--border-radius-full);
+  color: var(--text-color-primary);
+  flex: 1;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-inner); /* เงาด้านในเพื่อความลึก */
+}
+
+#city_input:focus {
+  outline: none;
+  border-color: var(--accent-color); /* เปลี่ยนสีขอบเมื่อได้รับโฟกัส */
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.25); /* เงาเรืองรอบช่องค้นหาเมื่อได้รับโฟกัส */
+}
+
+.header button {
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 12px 20px;
+  border-radius: var(--border-radius-full);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.header button:hover {
+  transform: translateY(-2px); /* ยกขึ้นเล็กน้อยเมื่อโฮเวอร์ */
+}
+
+.header button:active {
+  transform: translateY(0); /* กลับสู่ตำแหน่งเดิมเมื่อกด */
+}
+
+#searchBtn {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+#searchBtn:hover {
+  background-color: var(--accent-color-hover);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.5); /* เงาเรืองเมื่อโฮเวอร์ */
+}
+
+#locationBtn {
+  background-color: transparent;
+  color: var(--text-color-primary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#locationBtn:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* สไตล์การ์ดแบบสมัยใหม่ */
+.card {
+  background-color: var(--card-bg);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--spacing-md);
+  box-shadow: var(--shadow-md);
+  border: 1px solid rgba(255, 255, 255, 0.05); /* ขอบบางๆ */
+  transition: transform var(--transition-medium), box-shadow var(--transition-medium);
+  overflow: hidden;
+  position: relative;
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent); /* เส้นสว่างบางๆ ด้านบนของการ์ด */
+}
+
+.card:hover {
+  transform: translateY(-4px); /* ยกขึ้นเมื่อโฮเวอร์ */
+  box-shadow: var(--shadow-lg); /* เงาใหญ่ขึ้นเมื่อโฮเวอร์ */
+}
+
+.card p {
+  font-size: 0.875rem;
+  color: var(--text-color-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+.card h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.card-title {
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-color-tertiary);
+  margin-bottom: var(--spacing-xs);
+  font-weight: 600;
+}
+
+/* เลย์เอาท์กริดหลัก */
+.weather-data {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* แบ่งเป็น 4 คอลัมน์เท่าๆ กัน */
+  gap: var(--spacing-lg);
+}
+
+/* คอลัมน์ซ้าย - สภาพอากาศปัจจุบัน */
+.weather-left {
+  grid-column: span 1;
+}
+
+.current-weather {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.current-weather-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-md);
+}
+
+.current-temp {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+  margin: var(--spacing-sm) 0;
+  background: linear-gradient(45deg, var(--text-color-primary), var(--accent-color)); /* ข้อความแบบไล่สี */
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.weather-icon {
+  font-size: 4rem;
+  margin-right: var(--spacing-sm);
+}
+
+.weather-details {
+  margin: var(--spacing-md) 0;
+}
+
+.weather-detail-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.weather-detail-item i {
+  color: var(--accent-color);
+  margin-right: var(--spacing-sm);
+  width: 18px;
+}
+
+.card-footer {
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid rgba(255, 255, 255, 0.05); /* เส้นคั่นบางๆ */
+}
+
+.card-footer p {
+  font-size: 0.875rem;
+  margin-bottom: var(--spacing-sm);
+  display: flex;
+  align-items: center;
+}
+
+.card-footer i {
+  margin-right: var(--spacing-xs);
+  color: var(--accent-color);
+}
+
+.forecast-item {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  place-items: center;
+  margin-bottom: var(--spacing-md);
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* เส้นคั่นระหว่างรายการพยากรณ์ */
+}
+
+.forecast-item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.forecast-day {
+  font-weight: 500;
+}
+
+.forecast-temp {
+  font-weight: 600;
+}
+
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+/* คอลัมน์ขวา - รายละเอียดสภาพอากาศ */
+.weather-right {
+  grid-column: span 3;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  color: var(--text-color-primary);
+  position: relative;
+  padding-left: var(--spacing-sm);
+}
+
+.section-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 25%;
+  height: 50%;
+  width: 3px;
+  background-color: var(--accent-color); /* แถบสีด้านข้างหัวข้อ */
+  border-radius: 999px;
+}
+
+/* ส่วนไฮไลท์ */
+.highlights {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-md);
+}
+
+.highlights .card:nth-of-type(1),
+.highlights .card:nth-of-type(2) {
+  grid-column: span 2; /* การ์ดสองอันแรกครอบคลุม 2 คอลัมน์ */
+}
+
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-md);
+}
+
+/* สไตล์ของดัชนีคุณภาพอากาศ */
+.air-index {
+  color: #000;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-full);
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.air-index.aqi-1 { 
+  background-color: var(--aqi-1); /* ดัชนีคุณภาพอากาศ: ดี */
+}
+.air-index.aqi-2 { 
+  background-color: var(--aqi-2); /* ดัชนีคุณภาพอากาศ: ปานกลาง */
+}
+.air-index.aqi-3 { 
+  background-color: var(--aqi-3); /* ดัชนีคุณภาพอากาศ: ไม่ดีสำหรับกลุ่มอ่อนไหว */
+}
+.air-index.aqi-4 { 
+  background-color: var(--aqi-4); /* ดัชนีคุณภาพอากาศ: ไม่ดี */
+  color: white;
+}
+.air-index.aqi-5 { 
+  background-color: var(--aqi-5); /* ดัชนีคุณภาพอากาศ: แย่มาก */
+  color: white;
+}
+
+.air-indices {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-md);
+}
+
+.air-index-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.air-index-value {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: var(--spacing-xs) 0;
+  color: var(--text-color-primary);
+}
+
+.air-indices p {
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-color-tertiary);
+}
+
+/* ส่วนพระอาทิตย์ขึ้น/ตก */
+.sunrise-sunset {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md);
+}
+
+.sunrise-sunset .item {
+  display: flex;
+  align-items: center;
+  background: linear-gradient(to right, rgba(255, 165, 0, 0.1), transparent); /* พื้นหลังไล่สีอ่อนๆ สำหรับพระอาทิตย์ขึ้น */
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+}
+
+.sunrise-sunset .item:last-child {
+  background: linear-gradient(to right, rgba(138, 43, 226, 0.1), transparent); /* พื้นหลังไล่สีอ่อนๆ สำหรับพระอาทิตย์ตก */
+}
+
+.sunrise-sunset .item i {
+  font-size: 2rem;
+  margin-right: var(--spacing-sm);
+  color: #ffa500; /* สีส้มสำหรับไอคอนพระอาทิตย์ขึ้น */
+}
+
+.sunrise-sunset .item:last-child i {
+  color: #8a2be2; /* สีม่วงสำหรับไอคอนพระอาทิตย์ตก */
+}
+
+.sunrise-sunset .item h2 {
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.card-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm) 0;
+}
+
+.card-item-label {
+  color: var(--text-color-secondary);
+  font-size: 0.875rem;
+}
+
+.card-item-value {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* ส่วนพยากรณ์รายชั่วโมง */
+.hourly-forecast {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: var(--spacing-sm);
+  overflow-x: auto; /* อนุญาตให้เลื่อนในแนวนอนเมื่อมีข้อมูลมากเกินไป */
+  padding: var(--spacing-xs);
+  margin-top: var(--spacing-md);
+  scrollbar-width: thin; /* แถบเลื่อนขนาดบาง */
+  scrollbar-color: var(--accent-color) var(--bg-color-secondary); /* สีของแถบเลื่อน */
+}
+
+.hourly-forecast::-webkit-scrollbar {
+  height: 6px; /* ความสูงของแถบเลื่อน */
+}
+
+.hourly-forecast::-webkit-scrollbar-track {
+  background: var(--bg-color-secondary); /* สีพื้นหลังของแถบเลื่อน */
+  border-radius: 10px;
+}
+
+.hourly-forecast::-webkit-scrollbar-thumb {
+  background-color: var(--accent-color); /* สีของตัวแถบเลื่อน */
+  border-radius: 10px;
+}
+
+.hourly-forecast .card {
+  text-align: center;
+  min-width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md) var(--spacing-sm);
+}
+
+.hour-temp {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.hour-time {
+  color: var(--text-color-tertiary);
+  font-size: 0.75rem;
+}
+
+/* แอนิเมชันการโหลด */
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}
+
+.loading {
+  animation: pulse 1.5s infinite ease-in-out; /* แอนิเมชันกระพริบเมื่อกำลังโหลด */
+}
+
+/* การปรับให้เหมาะกับขนาดหน้าจอต่างๆ */
+/* จอใหญ่ */
+@media (max-width: 1100px) {
+  .weather-data {
+    grid-template-columns: repeat(3, 1fr); /* ลดจาก 4 คอลัมน์เป็น 3 คอลัมน์ */
+    gap: var(--spacing-md);
+  }
+  
+  .weather-right {
+    grid-column: span 2;
+  }
+  
+  .highlights {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-sm);
+  }
+  
+  .highlights .card:nth-of-type(1) {
+    grid-column: span 3;
+  }
+  
+  .hourly-forecast {
+    grid-template-columns: repeat(6, 1fr); /* ลดจำนวนคอลัมน์ลง */
+  }
+}
+
+/* จอขนาดกลาง-ใหญ่ */
+@media (max-width: 1040px) {
+  .weather-data {
+    grid-template-columns: repeat(2, 1fr); /* ลดเหลือ 2 คอลัมน์ */
+  }
+  
+  .weather-right {
+    grid-column: span 1;
+  }
+  
+  .highlights {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .highlights .card:nth-of-type(1) {
+    grid-column: span 2;
+  }
+  
+  .hourly-forecast {
+    grid-template-columns: repeat(4, 1fr); /* ลดจำนวนคอลัมน์ลงอีก */
+  }
+}
+
+/* จอขนาดกลาง */
+@media (max-width: 992px) {
+  :root {
+    --spacing-md: 14px; /* ลดขนาดระยะห่างลงเล็กน้อย */
+    --spacing-lg: 20px;
+  }
+
+  .highlights .card {
+    grid-column: span 2; /* ทุกการ์ดในส่วนไฮไลท์ครอบคลุม 2 คอลัมน์ */
+  }
+  
+  .air-indices {
+    grid-template-columns: repeat(3, 1fr); /* ลดคอลัมน์ดัชนีคุณภาพอากาศ */
+  }
+
+  .card {
+    padding: var(--spacing-md); /* ลดขนาดแพดดิ้งเพื่อประหยัดพื้นที่ */
+  }
+}
+
+/* จอขนาดเล็ก-กลาง */
+@media (max-width: 859px) {
+  .weather-data {
+    grid-template-columns: 1fr; /* เปลี่ยนเป็นคอลัมน์เดียว */
+  }
+  
+  .highlights .card:nth-of-type(3),
+  .highlights .card:nth-of-type(4),
+  .highlights .card:nth-of-type(5),
+  .highlights .card:nth-of-type(6),
+  .highlights .card:nth-of-type(7) {
+    grid-column: span 1; /* การ์ดแต่ละใบครอบคลุม 1 คอลัมน์ */
+  }
+  
+  .air-indices {
+    grid-template-columns: repeat(5, 1fr); /* เพิ่มจำนวนคอลัมน์ในแนวนอน */
+  }
+
+  .current-temp {
+    font-size: 3rem; /* ลดขนาดตัวเลขอุณหภูมิ */
+  }
+}
+
+/* จอขนาดเล็ก */
+@media (max-width: 660px) {
+  body {
+    padding: var(--spacing-sm); /* ลดขนาดแพดดิ้งของหน้า */
+  }
+
+  .header {
+    flex-direction: column; /* เปลี่ยนจากแนวนอนเป็นแนวตั้ง */
+    padding: var(--spacing-sm) 0;
+  }
+  
+  .header h2 {
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .search-container {
+    flex-direction: column; /* ปุ่มและช่องค้นหาวางในแนวตั้ง */
+    width: 100%;
+    margin: 0;
+  }
+  
+  #city_input, 
+  #searchBtn, 
+  #locationBtn {
+    width: 100%; /* กว้างเต็มหน้าจอ */
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .weather-data {
+    gap: var(--spacing-sm); /* ลดช่องว่างระหว่างการ์ด */
+  }
+
+  .card {
+    margin-bottom: var(--spacing-sm);
+  }
+}
+
+/* จอขนาดเล็กมาก */
+@media (max-width: 580px) {
+  :root {
+    --spacing-md: 12px; /* ลดระยะห่างลงอีก */
+    --spacing-lg: 16px;
+  }
+
+  .air-indices {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-sm);
+  }
+
+  .current-temp {
+    font-size: 2.5rem; /* ลดขนาดตัวเลขอุณหภูมิลงอีก */
+  }
+}
+
+@media (max-width: 520px) {
+  .highlights .card:nth-of-type(3),
+  .highlights .card:nth-of-type(4),
+  .highlights .card:nth-of-type(5),
+  .highlights .card:nth-of-type(6),
+  .highlights .card:nth-of-type(7) {
+    grid-column: span 2; /* กลับไปครอบคลุม 2 คอลัมน์เนื่องจากหน้าจอแคบมาก */
+  }
+  
+  .air-indices {
+    grid-template-columns: repeat(3, 1fr); /* ลดคอลัมน์ดัชนีคุณภาพอากาศ */
+  }
+
+  .section-title {
+    font-size: 1.1rem; /* ลดขนาดหัวข้อ */
+  }
+}
+
+@media (max-width: 480px) {
+  .sunrise-sunset {
+    grid-template-columns: 1fr; /* เปลี่ยนเป็นการแสดงในแนวตั้ง */
+  }
+}
+
+@media (max-width: 450px) {
+  .hourly-forecast {
+    grid-template-columns: repeat(3, 1fr); /* ลดจำนวนคอลัมน์พยากรณ์รายชั่วโมง */
+  }
+}
+
+@media (max-width: 380px) {
+  .air-indices {
+    grid-template-columns: repeat(2, 1fr); /* ลดเหลือ 2 คอลัมน์สำหรับดัชนีคุณภาพอากาศ */
+  }
+
+  .card h2 {
+    font-size: 1.5rem; /* ลดขนาดหัวข้อในการ์ด */
+  }
+}
